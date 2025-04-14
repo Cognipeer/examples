@@ -59,7 +59,7 @@ import { CognipeerClient } from '@/lib/cognipeer-client';
 
 // Initialize the client
 const client = new CognipeerClient({
-  baseUrl: 'http://localhost:8080',
+  baseUrl: 'https://api.cognipeer.com/v1/client',
   token: 'your-optional-token'
 });
 

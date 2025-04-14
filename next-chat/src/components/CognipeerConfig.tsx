@@ -5,8 +5,8 @@ import { useCognipeer } from '@/context/CognipeerContext';
 
 export default function CognipeerConfig() {
   const { initializeClient, client } = useCognipeer();
-  const [baseUrl, setBaseUrl] = useState('http://localhost:8080');
-  const [token, setToken] = useState('dx8mbaigwou67xbodphjwda47jxawdhswmhld2rpqskdkvje0nza7xgjeuw1');
+  const [baseUrl, setBaseUrl] = useState('https://api.cognipeer.com/v1/client');
+  const [token, setToken] = useState('token');
   const [showConfig, setShowConfig] = useState(!client);
 
   const handleSubmit = (e: FormEvent) => {
@@ -44,7 +44,7 @@ export default function CognipeerConfig() {
               value={baseUrl}
               onChange={(e) => setBaseUrl(e.target.value)}
               className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="http://localhost:8080"
+              placeholder="https://api.cognipeer.com/v1/client"
             />
           </div>
           <div className="mb-3">
