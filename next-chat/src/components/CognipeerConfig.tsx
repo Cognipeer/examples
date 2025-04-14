@@ -19,7 +19,6 @@ export default function CognipeerConfig() {
     setShowConfig(!showConfig);
   };
 
-  // Initialize with defaults if first time
   useEffect(() => {
     if (!client) {
       initializeClient(baseUrl, token);
@@ -28,13 +27,12 @@ export default function CognipeerConfig() {
 
   return (
     <div className="bg-gray-100 border-b">
-      <button 
-        onClick={toggleConfig} 
-        className="w-full py-2 px-4 text-sm text-gray-600 flex items-center justify-center hover:bg-gray-200"
-      >
-        <span>{showConfig ? "Hide Configuration" : "Show Configuration"}</span>
+      <button
+        onClick={toggleConfig}
+        className="w-full py-2 px-4 text-sm text-gray-600 flex items-center justify-center hover:bg-gray-200">
+        <span>{showConfig ? 'Hide Configuration' : 'Show Configuration'}</span>
       </button>
-      
+
       {showConfig && (
         <form onSubmit={handleSubmit} className="p-4">
           <div className="mb-3">
@@ -43,7 +41,7 @@ export default function CognipeerConfig() {
               type="text"
               value={baseUrl}
               onChange={(e) => setBaseUrl(e.target.value)}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
               placeholder="https://api.cognipeer.com/v1/client"
             />
           </div>
@@ -53,14 +51,11 @@ export default function CognipeerConfig() {
               type="password"
               value={token}
               onChange={(e) => setToken(e.target.value)}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
               placeholder="Leave empty if not required"
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-          >
+          <button type="submit" className="w-full bg-teal-500 text-white py-2 rounded hover:bg-teal-600">
             Apply Configuration
           </button>
         </form>

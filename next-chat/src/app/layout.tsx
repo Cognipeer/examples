@@ -1,13 +1,17 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { CognipeerProvider } from "@/context/CognipeerContext";
+import React from 'react';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { CognipeerProvider } from '@/context/CognipeerContext';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Cognipeer Chat Example",
-  description: "A chat interface example using Cognipeer APIs",
+  title: 'cognipeer Chat Example',
+  description: 'A chat interface example using cognipeer APIs',
+  icons: {
+    icon: '/cognipeer-icon.png',
+  },
 };
 
 export default function RootLayout({
@@ -18,9 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body className={`${inter.className} h-full`}>
-        <CognipeerProvider>
-          {children}
-        </CognipeerProvider>
+        <CognipeerProvider>{children}</CognipeerProvider>
       </body>
     </html>
   );
