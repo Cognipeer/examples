@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "olAKs7gk3exM/xzozwIz8Hj31j/FfRguduHCCNQKt8g=",
+  "Source": "cognipeer-dotnet-example",
+  "BasePath": "_content/cognipeer-dotnet-example",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

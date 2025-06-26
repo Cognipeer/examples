@@ -1,0 +1,6 @@
+@cognipeer_dotnet_example_HostAddress = http://localhost:5265
+
+GET {{cognipeer_dotnet_example_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

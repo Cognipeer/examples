@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\cognipeer-dotnet-example.props" />
+</Project>
