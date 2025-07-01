@@ -6,7 +6,7 @@ namespace Cognipeer.DotNetExample.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsersController : ControllerBase
+public class sersController : CtrollerBase
 {
     private readonly IUserService _userService;
 
