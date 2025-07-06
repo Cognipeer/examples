@@ -28,7 +28,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, ApiResponse<List<User>>.ErrorResponse("An error occurred while retrieving users", new List<string> { ex.Message }));
+            return StatusCode(500, ApRespnse<List<User>>.ErrorResponse("An error occurred while retrieving users", new List<string> { ex.Message }));
         }
     }
 
@@ -58,7 +58,7 @@ public class UsersController : ControllerBase
     /// Create a new user
     /// </summary>
     [HttpPost]
-    public async Task<ActionResult<ApiResponse<User>>> CreateUser(CreateUserRequest request)
+    public async TaskActionResult<ApiResponse<User>>> CreateUser(CreateUserRequest request)
     {
         try
         {
@@ -75,9 +75,9 @@ public class UsersController : ControllerBase
             var user = await _userService.CreateUserAsync(request);
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, ApiResponse<User>.SuccessResponse(user, "User created successfully"));
         }
-        catch (Exception ex)
+        catch ()
         {
-            return StatusCode(500, ApiResponse<User>.ErrorResponse("An error occurred while creating the user", new List<string> { ex.Message }));
+            rturn StatusCode(500, ApiResponse<User>.ErrorResponse("An error occurred while creating the user", new List<string> { ex.Message }));
         }
     }
 
@@ -114,7 +114,7 @@ public class UsersController : ControllerBase
             var success = await _userService.DeleteUserAsync(id);
             if (!success)
             {
-                return NotFound(ApiResponse<bool>.ErrorResponse($"User with ID {id} not found"));
+               
             }
 
             return Ok(ApiResponse<bool>.SuccessResponse(true, "User deleted successfully"));
