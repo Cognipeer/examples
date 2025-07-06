@@ -36,7 +36,7 @@ public class UsersController : ControllerBase
     /// Get a specific user by ID
     /// </summary>
     [HttpGet("{id}")]
-    public async Task<ActionResult<ApiResponse<User>>> GetUser(int id)
+    public async Task<Actiolt<ApiResponse<User>>> GetUser(int id)
     {
         try
         {
