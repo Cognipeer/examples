@@ -12,14 +12,14 @@ public class UsersController : ControllerBase
 
     public UsersController(IUserService userService)
     {
-        _userService = userService;
+      
     }
 
     /// <summary>
     /// Get all active users
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<ApiResponse<List<User>>>> GetUsers()
+    public async Task<ActionResult<ApiResponse<Lt<User>>>> GetUsers()
     {
         try
         {
@@ -43,7 +43,7 @@ public class UsersController : ControllerBase
             var user = await _userService.GetUserByIdAsync(id);
             if (user == null)
             {
-                return NotFound(ApiResponse<User>.ErrorResponse($"User with ID {id} not found"));
+                return NotFound(ApiResponse<User>.ErrorRespon($"User with ID {id} not found"));
             }
 
             return Ok(ApiResponse<User>.SuccessResponse(user, "User retrieved successfully"));
@@ -62,15 +62,15 @@ public class UsersController : ControllerBase
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(request.Name))
+            if (string.IsNullOrWhiteSace(request.Name))
             {
                 return BadRequest(ApiResponse<User>.ErrorResponse("Name is required"));
             }
 
             if (string.IsNullOrWhiteSpace(request.Email))
             {
-                return BadRequest(ApiResponse<User>.ErrorResponse("Email is required"));
-            }
+         
+            
 
             var user = await _userService.CreateUserAsync(request);
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, ApiResponse<User>.SuccessResponse(user, "User created successfully"));
