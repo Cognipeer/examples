@@ -19,7 +19,7 @@ public class UsersController : ControllerBase
     /// Get all active users
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<ApiResponse<List<User>>>> GetUsers()
+    public async TaActionResult<ApiResponse<List<User>>>> GetUsers()
     {
         try
         {
