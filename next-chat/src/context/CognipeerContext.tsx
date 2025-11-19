@@ -1,8 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import CognipeerClient from '@cognipeer/client-js';
-import { Tool } from '@cognipeer/client-js/dist/interfaces';
+import { CognipeerClient } from '@cognipeer/sdk';
 
 export type Peer = {
   _id: string;
@@ -17,12 +16,12 @@ type Conversation = {
 
 type Message = {
   content: string;
-  tools?: Tool[];
+  tools?: any[];
   id: string;
   isUser: boolean;
 };
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_COGNIPEER_API_URL || 'https://api.cognipeer.com/v1/client';
+const API_BASE_URL = process.env.NEXT_PUBLIC_COGNIPEER_API_URL || 'https://api.cognipeer.com';
 const API_TOKEN = process.env.NEXT_PUBLIC_COGNIPEER_API_TOKEN || '';
 
 interface CognipeerContextType {
@@ -38,6 +37,10 @@ interface CognipeerContextType {
   createConversation: (peerId: string) => Promise<void>;
   sendMessage: (content: string) => Promise<void>;
   initializeClient: (baseUrl?: string, token?: string) => void;
+  apiToken: string;
+  apiUrl: string;
+  peerId: string;
+  setPeerId: (id: string) => void;
 }
 
 const CognipeerContext = createContext<CognipeerContextType | undefined>(undefined);
@@ -51,6 +54,8 @@ export const CognipeerProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [apiToken, setApiToken] = useState(API_TOKEN);
+  const [peerId, setPeerId] = useState('');
 
   useEffect(() => {
     if (!isInitialized) {
@@ -61,10 +66,11 @@ export const CognipeerProvider = ({ children }: { children: ReactNode }) => {
   const initializeClient = (baseUrl?: string, token?: string) => {
     try {
       const newClient = new CognipeerClient({
-        baseUrl: baseUrl || API_BASE_URL,
+        apiUrl: baseUrl || API_BASE_URL,
         token: token || API_TOKEN,
       });
       setClient(newClient);
+      setApiToken(token || API_TOKEN);
       setIsInitialized(true);
     } catch (err) {
       setError('Failed to initialize cognipeer client');
@@ -79,7 +85,7 @@ export const CognipeerProvider = ({ children }: { children: ReactNode }) => {
     setError(null);
 
     try {
-      const peersList = await client.peer.list();
+      const peersList = await client.peers.list();
       setPeers(peersList);
     } catch (err) {
       setError('Failed to load peers');
@@ -97,6 +103,7 @@ export const CognipeerProvider = ({ children }: { children: ReactNode }) => {
 
   const selectPeer = (peer: Peer) => {
     setSelectedPeer(peer);
+    setPeerId(peer._id);
     setConversation(null);
     setMessages([]);
   };
@@ -108,8 +115,8 @@ export const CognipeerProvider = ({ children }: { children: ReactNode }) => {
     setError(null);
 
     try {
-      const newConversation = await client.conversation.create(peerId);
-      setConversation(newConversation);
+      const response = await client.conversations.create({ peerId });
+      setConversation({ _id: response.conversationId || '', peerId });
       setMessages([]);
     } catch (err) {
       setError('Failed to create conversation');
@@ -134,9 +141,19 @@ export const CognipeerProvider = ({ children }: { children: ReactNode }) => {
 
       setMessages((prevMessages) => [...prevMessages, userMessage]);
 
-      const response = await client.conversation.sendMessage(conversation._id, content);
+      const response = await client.conversations.sendMessage({
+        conversationId: conversation._id,
+        content
+      });
 
-      setMessages((prevMessages) => [...prevMessages, response]);
+      const aiMessage: Message = {
+        content: response.content || '',
+        tools: response.tools,
+        id: `ai-${Date.now()}`,
+        isUser: false,
+      };
+
+      setMessages((prevMessages) => [...prevMessages, aiMessage]);
     } catch (err) {
       setError('Failed to send message');
       console.error(err);
@@ -158,6 +175,10 @@ export const CognipeerProvider = ({ children }: { children: ReactNode }) => {
     createConversation,
     sendMessage,
     initializeClient,
+    apiToken,
+    peerId,
+    setPeerId,
+    apiUrl: API_BASE_URL
   };
 
   return <CognipeerContext.Provider value={value}>{children}</CognipeerContext.Provider>;

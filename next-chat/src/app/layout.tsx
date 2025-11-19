@@ -7,7 +7,7 @@ import { CognipeerProvider } from '@/context/CognipeerContext';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'cognipeer Chat Example',
+  title: 'Cognipeer Chat Example',
   description: 'A chat interface example using cognipeer APIs',
   icons: {
     icon: '/cognipeer-icon.png',
@@ -20,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
-      <body className={`${inter.className} h-full`}>
+    <html lang="en" className="h-full" suppressHydrationWarning>
+      <body className={`${inter.className} h-full`} suppressHydrationWarning>
         <CognipeerProvider>{children}</CognipeerProvider>
       </body>
     </html>
